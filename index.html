@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>izfrza News | Tugas Bootstrap Murni</title>
+    <!-- Bootstrap 4.5.2 via CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CDN untuk ikon buku -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
+    <!-- Style inline minimal untuk estetika gambar, karena dilarang menggunakan style.css -->
+    <style>
+        .news-card-img {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER & NAV (Semantic HTML) ==================== -->
+    <header>
+        <!-- Navbar: responsif dengan fixed-top dan utilitas Bootstrap -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+            <div class="container">
+                <!-- Logo Gambar Buku telah ditambahkan -->
+                <a class="navbar-brand font-weight-bold text-primary" href="#"><i class="fas fa-book-open mr-2"></i> IZFRZA NEWS LOG</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Menu Navigasi Dummy -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="#">Beranda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Kategori</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Tentang Kami</a></li>
+                    </ul>
+                    <!-- Kolom Pencarian/Filter Real-time Sisi Klien -->
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Filter Judul Berita..." aria-label="Filter" id="clientFilterInput">
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="button">Filter</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Padding top untuk mengatasi fixed-top navbar -->
+    <div class="pt-5 mt-3"></div> 
+
+    <!-- ==================== MAIN (Semantic HTML) ==================== -->
+    <main class="container my-5">
+        
+        <section class="mb-5 p-4 bg-primary text-white rounded shadow-lg">
+            <h3 class="mb-3">Pencarian Berita (News API)</h3>
+            <form id="apiSearchForm" class="form-row align-items-center">
+                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                    <input type="text" id="queryInput" placeholder="Masukkan topik (e.g., olahraga, ekonomi)..." class="form-control form-control-lg">
+                </div>
+                <div class="col-12 col-md-3">
+                    <button type="submit" id="searchButton" class="btn btn-light btn-block btn-lg font-weight-bold">
+                        <span id="searchSpinner" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="display:none;"></span>
+                        Cari Berita
+                    </button>
+                </div>
+            </form>
+            <div id="alertBox" class="mt-3"></div>
+        </section>
+
+        <!-- SECTION NEWS CARDS (Daftar Berita) -->
+        <section>
+            <h2 class="mb-4 border-bottom pb-2 text-secondary">Daftar Berita Terbaru (Minimal 6 Kartu)</h2>
+            <!-- Container utama kartu berita, menggunakan Bootstrap Grid -->
+            <div id="newsCards" class="row">
+                <!-- Kartu berita di-inject di sini oleh script.js -->
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- ==================== FOOTER (Semantic HTML) ==================== -->
+    <footer class="bg-light py-4 mt-5 border-top">
+        <div class="container">
+            <div class="row">
+                <!-- Hak Cipta & Kontak -->
+                <div class="col-md-6 text-center text-md-left small text-muted">
+                    <p class="mb-1">&copy; 2024 IZFRZA News. Hak Cipta Dilindungi.</p>
+                    <p class="mb-0">Dibuat untuk Tugas Pemrograman Web. <a href="#" class="text-secondary">Hubungi Kami.</a></p>
+                </div>
+                <!-- Tautan Media Sosial Dummy -->
+                <div class="col-md-6 text-center text-md-right pt-2 pt-md-0">
+                    <span class="mr-3 text-muted">Ikuti Kami:</span>
+                    <a href="#" class="text-secondary mx-1">Facebook</a>
+                    <a href="#" class="text-secondary mx-1">Twitter</a>
+                    <a href="#" class="text-secondary mx-1">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS dependencies (Harus dimuat sebelum script.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Tautkan ke file JavaScript eksternal -->
+    <script src="script.js"></script>
+    
+</body>
+</html>
