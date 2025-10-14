@@ -1,8 +1,10 @@
-// ==================== SCRIPT JAVASCRIPT Fungsional untuk Tugas ====================
+// ==================== SCRIPT JAVASCRIPT Fungsional untuk Tugas (IMPLEMENTASI PROXY) ====================
 
-// ** PENTING: Jika kode masih tidak berfungsi, kemungkinan API Key Anda telah mencapai batas request atau tidak valid. **
+// ** PENTING: Implementasi ini menggunakan PROXY (api.allorigins.win) untuk mengatasi pembatasan CORS/localhost News API.**
+// ** Harap gunakan Live Server untuk menghindari proxy ini jika memungkinkan. **
 const API_KEY = 'ccc1188fb8f6435a8f7f61bb9d8a215f'; 
 const NEWS_BASE_URL = "https://newsapi.org/v2/";
+const PROXY = "https://api.allorigins.win/get?url="; // <-- PROXY DIKEMBALIKAN
 
 // Selektor DOM
 const NEWS_CARDS_CONTAINER = document.getElementById('newsCards');
@@ -59,7 +61,7 @@ function showCardLoading(query) {
 }
 
 /**
- * Mengambil berita dari News API.
+ * Mengambil berita dari News API menggunakan proxy.
  * @param {string} query - Kata kunci pencarian.
  */
 async function fetchNews(query = '') {
@@ -71,19 +73,22 @@ async function fetchNews(query = '') {
     
     if (query) {
         endpoint = 'everything';
-        // Menggunakan pageSize 15 untuk memastikan ketersediaan artikel yang cukup
         urlParams = `q=${encodeURIComponent(query)}&language=id&sortBy=relevancy&pageSize=15&apiKey=${API_KEY}`;
     }
 
     const NEWS_URL = `${NEWS_BASE_URL}${endpoint}?${urlParams}`;
+    // Fetching melalui proxy
+    const PROXY_URL = PROXY + encodeURIComponent(NEWS_URL); 
 
     try {
-        const response = await fetch(NEWS_URL);
-        const data = await response.json();
+        const response = await fetch(PROXY_URL);
+        const proxyData = await response.json();
+        // Parsing konten yang dikembalikan oleh proxy
+        const data = JSON.parse(proxyData.contents); 
         
         if (data.status === 'error') {
             // Pesan error spesifik dari API
-            displayMessage(`[ERROR API]: ${data.message}. **Pastikan API Key valid dan belum mencapai batas request.**`);
+            displayMessage(`[ERROR API via Proxy]: ${data.message}. Kemungkinan API Key Anda tidak valid atau telah mencapai batas request.`);
         } else {
             // Filter artikel yang memiliki judul, deskripsi, dan gambar yang valid
             const validArticles = data.articles.filter(a => a.title && a.description && a.urlToImage);
@@ -97,8 +102,8 @@ async function fetchNews(query = '') {
             }
         }
     } catch (error) {
-        // Error jaringan atau CORS
-        displayMessage('Terjadi kesalahan jaringan/koneksi. PASTIKAN Anda menjalankan file ini **melalui Live Server**, bukan langsung dari browser (file:///...).');
+        // Error jaringan atau proxy
+        displayMessage('Terjadi kesalahan jaringan/koneksi atau masalah pada server proxy (api.allorigins.win). Coba lagi.');
         console.error("Fetch Error:", error);
     } finally {
         toggleSearchLoading(false); // Selalu nonaktifkan loading setelah selesai
@@ -205,7 +210,6 @@ API_SEARCH_FORM.addEventListener('submit', function(e) {
 });
 
 // 2. Event Listener untuk filtering client-side (saat tombol dilepas/keyup)
-// Catatan: Tombol "Filter" yang statis pada HTML tidak diperlukan karena menggunakan 'keyup'.
 CLIENT_FILTER_INPUT.addEventListener('keyup', filterNewsCards);
 
 
