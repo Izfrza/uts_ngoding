@@ -19,19 +19,6 @@ const SEARCH_SPINNER = document.getElementById('searchSpinner');
 const NO_TITLE_TEXT = 'Tidak Ada Judul';
 const NO_SUMMARY_TEXT = 'Tidak ada ringkasan yang tersedia.';
 const PLACEHOLDER_IMG = 'https://via.placeholder.com/400x200?text=IZFRZA+NO+IMAGE';
-const PROXY = "https://api.allorigins.win/get?url=";
-
-async function fetchFromAPI(endpoint) {
-  try {
-    const response = await fetch(PROXY + encodeURIComponent(endpoint));
-    const proxyData = await response.json();
-    const data = JSON.parse(proxyData.contents); 
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return { articles: [] };
-  }
-}
 
 // ===================================
 // FUNGSI UTAMA NEWS API & TAMPILAN
@@ -228,4 +215,5 @@ CLIENT_FILTER_INPUT.addEventListener('keyup', filterNewsCards);
 
 // Muat berita utama (default) saat halaman pertama kali dibuka
 document.addEventListener('DOMContentLoaded', () => fetchNews());
+
 
